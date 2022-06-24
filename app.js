@@ -6,12 +6,13 @@ const connectDB = require('./db/connect');
 const authRouter = require("./routes/auth");
 const jobsRouter = require("./routes/jobs");
 const PORT = process.env.PORT || 3000;
+const authorize = require("./middlewares/authorization")
 const notFound = require("./middlewares/notFound");
 const errorHandler = require("./middlewares/errorHandler");
 
 app.use(express.json());
 
-app.use('/api/v1/jobs', jobsRouter);
+app.use('/api/v1/jobs', authorize, jobsRouter);
 app.use('/api/v1/auth', authRouter);
 
 app.use(notFound);

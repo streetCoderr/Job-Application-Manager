@@ -5,8 +5,7 @@ const {
   NotFound } = require("../errors");
   
 const getAllJobs = (req, res) => {
-  throw new BadRequest("Very bad request");
-  res.send("get all jobs");
+  res.json(req.user);
 }
 
 const createJob = (req, res) => {
