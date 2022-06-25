@@ -13,7 +13,7 @@ const login = async (req, res) => {
   const { email, password } = req.body
   if (!email || !password)
     throw new BadRequest("Please provide email and password")
-  const user = await User.findOne({email});
+  const user = await User.findOne({email: email.toLowerCase().trim()});
   if (!user) throw new Unauthorized('Invalid credentials');
   let correctPassword = await user.comparePassword(password);
   if (!correctPassword) throw new Unauthorized('Invalid credentials');
