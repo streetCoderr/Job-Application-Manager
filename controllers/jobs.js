@@ -28,7 +28,7 @@ const updateJob = async (req, res) => {
   const { company, position, status } = req.body;
   if (!company || !position || !status)
     throw new BadRequest("Please provide all necessay fields")
-  const job = await Job.findByIdAndUpdate({createdBy, _id: jobID},
+  const job = await Job.findOneAndUpdate({createdBy, _id: jobID},
      {company,position, status}, {new: true});
   if (!job) throw new NotFound(`The given id: ${jobID} has no job associated with it`)
   res.status(StatusCodes.OK).json(job);
@@ -37,7 +37,7 @@ const updateJob = async (req, res) => {
 const deleteJob = async (req, res) => {
   const createdBy = req.user.userId;
   const jobID = req.params.id;
-  const job = await Job.findByIdAndDelete({createdBy, _id: jobID});
+  const job = await Job.findOneAndDelete({createdBy, _id: jobID});
   if (!job) throw new NotFound(`The given id: ${jobID} has no job associated with it`);
   res.status(StatusCodes.OK).send();
 }
